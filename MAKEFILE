@@ -1,0 +1,33 @@
+# Makefile
+
+# Specify the project name
+PROJECT_NAME = ReactMirror
+
+# Default target
+all: ts ocaml c fsharp
+
+# TypeScript build and run
+ts:
+	cd TypeScript && tsc main.ts && node main.js
+
+# OCaml build and run
+ocaml:
+	ocamlc -o main ocaml/component.cmo ocaml/component.cmi ocaml/main.ml
+	./main
+
+# C build and run
+c:
+	gcc -o main c/main.c c/component.c
+	./main
+
+# F# build and run
+fsharp:
+	dotnet build FSharp/
+	dotnet run --project FSharp/
+
+# Clean all
+clean:
+	rm -f TypeScript/*.js ocaml/*.cmo ocaml/*.cmi main c/main c/component main
+
+# Phony targets
+.PHONY: all ts ocaml c fsharp clean
